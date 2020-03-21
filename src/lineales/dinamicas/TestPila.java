@@ -14,14 +14,19 @@ public class TestPila {
        /* //Verifica capicua
         System.out.println("\nLa pila es capicua: "+esCapicua(pila));*/
         
+      //Clona una pila en base a otra
+        String pilaClon=pila.clone().toString();
+        System.out.println("\nClon: "+pilaClon);
+        
+        pila.vaciar();
         //Desapila
         System.out.println("\nDesapilar: "+desApilar(pila));
         System.out.println(pila.toString());        
         
-        //Clona una pila en base a otra
-        System.out.println("\nClon: "+pila.clone().toString());
         
+        System.out.println("/nCon2: "+ pilaClon);
         
+
         //Obtiene el elemento que esta en el tope
         System.out.println("\nTope: "+obtenerTope(pila));
         

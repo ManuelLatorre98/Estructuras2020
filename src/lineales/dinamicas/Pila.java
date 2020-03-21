@@ -25,7 +25,7 @@ public class Pila {
 	public Object obtenerTope() {
 		Object elemTope;
 		if (this.tope == null) {
-			elemTope = "LA PILA ESTA VACIA";
+			elemTope = null;
 		} else {
 			elemTope = this.tope.getElem();
 		}
@@ -42,37 +42,45 @@ public class Pila {
 	}
 
 	public Pila clone() {
-		Nodo aux = this.tope; // Sigue a mi pila original
+		Nodo flagEnlace=this.tope.getEnlace(); // Sigue a mi pila original a partir del primer enlace (segundo elemento de la pila original)
 		Pila clon = new Pila();
-		Nodo posicionClon; // Sigue a la pila clon
+		Nodo flagClon; // Sigue a la pila clon
 
 		if (this.tope != null) {
-
-			Nodo nodoClon = new Nodo(this.tope.getElem(), this.tope.getEnlace());
+			Nodo nodoClon = new Nodo(this.tope.getElem(), null);
 			clon.tope = nodoClon;
-			aux = aux.getEnlace();
-			posicionClon = clon.tope.getEnlace();
-
-			while (aux != null) {
-				posicionClon.setEnlace(aux.getEnlace());
-				posicionClon = posicionClon.getEnlace();
-				aux = aux.getEnlace();
+			flagClon = clon.tope;
+			while (flagEnlace != null) {
+				flagClon.setEnlace(new Nodo(flagEnlace.getElem(),null)); //aux siempre esta apuntando al enlace en la otra pila
+				flagClon=flagClon.getEnlace();
+				flagEnlace=flagEnlace.getEnlace();
 			}
 		}
 		return clon;
 	}
 
-	public String toString() {
-		Nodo aux = this.tope;
-		String cadena = "TOPE ---> ";
-		while (aux != null) {
-			cadena += aux.getElem();
-			aux = aux.getEnlace();
-			if (aux != null) {
-				cadena += ", ";
-			}
+	public String toString () {
+		String cadena="";
+		if(this.tope==null) {
+			cadena+="Pila vacia";
+		}else {
+			cadena=auxToString(this.tope)+" <---TOPE";
 		}
-		cadena += "]";
+		return cadena;
+	}
+	
+	private String auxToString(Nodo flagNodo) { //Uso este metodo auxiliar ya que en el test hace llamado a toString() sin parametros
+		String cadena="";
+		if(flagNodo==null) {
+			cadena+="[";
+		}else {
+				cadena= auxToString(flagNodo.getEnlace());
+				if(flagNodo!=null && !cadena.equals("[")) { //Para que no salga una coma al final
+					cadena+=", ";
+				}
+				cadena+=flagNodo.getElem();
+				
+		}
 		return cadena;
 	}
 
