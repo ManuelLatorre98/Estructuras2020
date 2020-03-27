@@ -1,5 +1,5 @@
 package test.lineales;
-import lineales.estaticas.Cola;
+import lineales.dinamicas.Cola;
 public class TestCola {
     public static void main(String[] args) {
  
