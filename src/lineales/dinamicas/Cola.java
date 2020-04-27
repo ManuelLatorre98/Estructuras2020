@@ -13,7 +13,7 @@ public class Cola {
 		boolean exito = true;
 
 		Nodo nodo = new Nodo(elem, null);
-		if (this.frente == null && this.fin == null) { // Si es el primer elemento
+		if (this.frente == null && this.fin == null) {
 			this.frente = nodo;
 			this.fin = nodo;
 		} else {
@@ -26,7 +26,7 @@ public class Cola {
 
 	public boolean sacar() {
 		boolean exito = false;
-		if (this.frente != null && this.fin != null) { // Si la cola no esta vacia
+		if (this.frente != null && this.fin != null) {
 			this.frente = this.frente.getEnlace();
 			if (this.frente == null) {
 				this.fin = null;
@@ -47,7 +47,7 @@ public class Cola {
 	}
 
 	public boolean esVacia() {
-		return this.frente == null; // Si el frente es null el fin tambien
+		return this.frente == null; 
 	}
 
 	public void vaciar() {
@@ -60,8 +60,8 @@ public class Cola {
 		Nodo flagClon;
 		Nodo flagCola;
 
-		if (this.frente != null) { // Si la cola no es vacia
-			clon.frente = new Nodo(this.frente.getElem(), null); // No le seteo el enlace ya que tiene que ser un nuevo												// nodo lo hago despues y queda mas ordenado
+		if (this.frente != null) {
+			clon.frente = new Nodo(this.frente.getElem(), null); 
 			flagClon = clon.frente;
 			flagCola = this.frente.getEnlace();
 
@@ -70,7 +70,7 @@ public class Cola {
 				flagClon.setEnlace(nodoClon);	
 				flagClon = flagClon.getEnlace();
 				flagCola = flagCola.getEnlace();
-				if(flagCola==null) { //Si estoy en el ultimo elemento de la cola indico que el nodo es el final de mi clon
+				if(flagCola==null) { 
 					clon.fin=nodoClon;
 				}
 			}

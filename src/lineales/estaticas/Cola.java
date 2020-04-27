@@ -2,7 +2,7 @@ package lineales.estaticas;
 
 public class Cola {
 	private int tamaño=10;
-	private Object []array=new Object[this.tamaño-1];
+	private Object []array=new Object[this.tamaño];
 	private int frente=0;
 	private int fin=0;
 	
@@ -13,7 +13,7 @@ public class Cola {
 		boolean exito=false;
 		if((this.fin+1) % this.tamaño != frente) { //Como el array es circular con el mod obtengo el valor que obtendria "dando la vuelta"
 			this.array[fin]=elem; //Al final de la cola pongo el elemento
-			this.fin= (this.fin+1)%tamaño; //Mi nuevo final va a ser la siguiente posicion a la derecha
+			this.fin= (this.fin+1)%tamaño; //Mi nuevo final va a ser la siguiente posicion a la derecha (Dando la vuelta si llega al final del arreglo)
 			exito=true;
 		}	
 		return exito;

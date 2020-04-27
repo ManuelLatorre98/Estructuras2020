@@ -22,9 +22,7 @@ public class Lista {
 					posicion++;
 				}
 
-				if (posicion == (pos - 1)) { // Pudo parar porque flagNodo==null por lo tanto la
-												// posicion exedia el
-					// tamaño de la lista y exito se mantendra en false
+				if (posicion == (pos - 1)) { 
 					flagNodo.setEnlace(new Nodo(elem, flagNodo.getEnlace()));
 					exito = true;
 				}
@@ -73,7 +71,22 @@ public class Lista {
 		}
 		return elem;
 	}
-
+	
+	public int localizar(Object elem) {
+		int posicion=0;
+		Nodo flagNodo=this.cabecera;
+		while(flagNodo!=null && !flagNodo.getElem().equals(elem)) {
+			flagNodo=flagNodo.getEnlace();
+			posicion++;
+		}
+		if(flagNodo!=null) { //El while corta una posicion antes si encuentra al elemento
+			posicion++;
+		}else { //Si corto el while con flagNodo==null significa que no econtro el elem
+			posicion=-1;
+		}
+		return posicion;
+	}
+	
 	public int longitud() {
 		int longitud = 0;
 		Nodo flagNodo = this.cabecera;
@@ -147,7 +160,7 @@ public class Lista {
 		return flagInvertida;
 	}
 
-	public void apariciones(Object elem) {
+	public void eliminarApariciones(Object elem) {
 		Nodo flagLista=this.cabecera;
 		if (this.cabecera != null) {
 			while (this.cabecera!=null && this.cabecera.getElem().equals(elem)) {

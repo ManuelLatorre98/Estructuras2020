@@ -42,12 +42,13 @@ public class Pila {
 	}
 
 	public Pila clone() {
-		Nodo flagEnlace=this.tope.getEnlace(); // Sigue a mi pila original a partir del primer enlace (segundo elemento de la pila original)
+		Nodo flagEnlace; // Sigue a mi pila original a partir del primer enlace (segundo elemento de la pila original)
 		Pila clon = new Pila();
 		Nodo flagClon; // Sigue a la pila clon
 
 		if (this.tope != null) {
 			Nodo nodoClon = new Nodo(this.tope.getElem(), null);
+			flagEnlace=this.tope.getEnlace();
 			clon.tope = nodoClon;
 			flagClon = clon.tope;
 			while (flagEnlace != null) {
