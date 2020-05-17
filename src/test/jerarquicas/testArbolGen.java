@@ -19,6 +19,6 @@ public class testArbolGen {
         System.out.println(arbol.toString());  
         ArbolGen clon= arbol.clone();
        
-        System.out.println(arbol.ancestros('P'));
+        System.out.println(arbol.ancestros('G'));
     }
 }

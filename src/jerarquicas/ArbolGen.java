@@ -12,7 +12,7 @@ public class ArbolGen {
 	public boolean insertar(Object elem, Object elemPadre) {
 		boolean exito = false;
 		NodoGen flagNodo = this.raiz;
-		if (this.raiz == null && elemPadre == null) {
+		if (this.raiz == null) {
 			this.raiz = new NodoGen(elem, null, null);
 			exito = true;
 		} else {
@@ -134,13 +134,13 @@ public class ArbolGen {
 	}
 
 	private int auxNivel(NodoGen flagNodo, Object elem, int cont) {
-		int nivel = 0;
+		int nivel = -1;
 		if (flagNodo != null) {
 			if (flagNodo.getElem().equals(elem)) {
 				nivel = cont;
 			} else {
 				nivel = auxNivel(flagNodo.getHijoIzq(), elem, cont + 1);
-				if (nivel == 0) {
+				if (nivel == -1) {
 					nivel = auxNivel(flagNodo.getHermanoDer(), elem, cont);
 				}
 			}
@@ -161,7 +161,7 @@ public class ArbolGen {
 		if (flagNodo != null) {
 			if (flagNodo.getElem().equals(elem)) {
 				while (!pila.esVacia()) {
-					lista.insertar(pila.obtenerTope(), 1);
+					lista.insertar(pila.obtenerTope(), lista.longitud()+1);
 					pila.desapilar();
 				}
 			} else {
