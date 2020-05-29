@@ -22,7 +22,7 @@ public class Lista {
 					posicion++;
 				}
 
-				if (posicion == (pos - 1)) { 
+				if (posicion == (pos - 1)) {
 					flagNodo.setEnlace(new Nodo(elem, flagNodo.getEnlace()));
 					exito = true;
 				}
@@ -71,22 +71,22 @@ public class Lista {
 		}
 		return elem;
 	}
-	
+
 	public int localizar(Object elem) {
-		int posicion=0;
-		Nodo flagNodo=this.cabecera;
-		while(flagNodo!=null && !flagNodo.getElem().equals(elem)) {
-			flagNodo=flagNodo.getEnlace();
+		int posicion = 0;
+		Nodo flagNodo = this.cabecera;
+		while (flagNodo != null && !flagNodo.getElem().equals(elem)) {
+			flagNodo = flagNodo.getEnlace();
 			posicion++;
 		}
-		if(flagNodo!=null) { //El while corta una posicion antes si encuentra al elemento
+		if (flagNodo != null) { // El while corta una posicion antes si encuentra al elemento
 			posicion++;
-		}else { //Si corto el while con flagNodo==null significa que no econtro el elem
-			posicion=-1;
+		} else { // Si corto el while con flagNodo==null significa que no econtro el elem
+			posicion = -1;
 		}
 		return posicion;
 	}
-	
+
 	public int longitud() {
 		int longitud = 0;
 		Nodo flagNodo = this.cabecera;
@@ -161,20 +161,64 @@ public class Lista {
 	}
 
 	public void eliminarApariciones(Object elem) {
-		Nodo flagLista=this.cabecera;
+		Nodo flagLista = this.cabecera;
 		if (this.cabecera != null) {
-			while (this.cabecera!=null && this.cabecera.getElem().equals(elem)) {
+			while (this.cabecera != null && this.cabecera.getElem().equals(elem)) {
 				this.cabecera = this.cabecera.getEnlace();
-				flagLista=this.cabecera;
+				flagLista = this.cabecera;
 			}
-			while (this.cabecera!=null && flagLista.getEnlace() != null) {
+			while (this.cabecera != null && flagLista.getEnlace() != null) {
 				if (flagLista.getEnlace().getElem().equals(elem)) {
 					flagLista.setEnlace(flagLista.getEnlace().getEnlace());
-				}else {
-						flagLista = flagLista.getEnlace();
+				} else {
+					flagLista = flagLista.getEnlace();
 				}
-				
+
 			}
+		}
+	}
+
+	public void intercalarElem(Object elem, int k) {
+		Nodo flagNodo;
+		int cont = 0;
+		this.cabecera = new Nodo(elem, this.cabecera);
+		flagNodo = this.cabecera;
+		while (flagNodo != null) {
+			if (cont == k) {
+				flagNodo.setEnlace(new Nodo(elem, flagNodo.getEnlace()));
+				flagNodo = flagNodo.getEnlace();
+				cont = 0;
+			} else {
+				flagNodo = flagNodo.getEnlace();
+				cont++;
+			}
+		}
+	}
+
+	public void agregarProducto(int x) {
+		int cont = 0;
+		int producto = 1;
+		Nodo flagNodo = this.cabecera;
+		while (flagNodo != null) {
+			if (cont < x) {
+				cont++;
+				producto = producto * (int) flagNodo.getElem();
+				if (cont < x) {
+					flagNodo = flagNodo.getEnlace();
+				}
+			}
+			
+			if(flagNodo.getEnlace()==null) {
+				producto=producto = producto * (int) flagNodo.getElem();
+			}
+			
+			if ((cont == x) || (flagNodo.getEnlace() == null)) {
+					flagNodo.setEnlace(new Nodo(producto, flagNodo.getEnlace()));
+					cont = 0;
+					producto = 1;
+					flagNodo = flagNodo.getEnlace().getEnlace();
+				}
+			
 		}
 	}
 }

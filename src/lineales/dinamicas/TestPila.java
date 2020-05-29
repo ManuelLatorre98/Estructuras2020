@@ -11,8 +11,8 @@ public class TestPila {
         apilar(pila);
         System.out.println(pila.toString());
         
-       /* //Verifica capicua
-        System.out.println("\nLa pila es capicua: "+esCapicua(pila));*/
+        //Verifica capicua
+        System.out.println("\nLa pila es capicua: "+esCapicua(pila));
         
       //Clona una pila en base a otra
         String pilaClon=pila.clone().toString();
@@ -90,6 +90,9 @@ public class TestPila {
     			clon.desapilar();
     			inver.desapilar();
     		}
+    	}
+    	if((!clon.esVacia() || !inver.esVacia()) && capicua) {
+    		capicua=false;
     	}
 
     	return capicua;

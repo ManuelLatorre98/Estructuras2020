@@ -1,5 +1,5 @@
 package test.lineales;
-import lineales.dinamicas.Cola;
+import lineales.dinamicas.*;
 public class TestCola {
     public static void main(String[] args) {
  
@@ -9,7 +9,8 @@ public class TestCola {
         //Apila
         System.out.println("Poner: "+poner(cola));
         System.out.println(cola.toString());
-        
+        System.out.println(verificarBalanceo(cola));
+       /* System.out.println(generarOtraCola(cola).toString());
         
         //Saca
         System.out.println("\nSacar: "+sacar(cola));
@@ -29,17 +30,32 @@ public class TestCola {
         //Vacia la pila
         cola.vaciar();
         System.out.println("\nSe vacio correctamente: "+esVacia(cola));
-        System.out.println("\nFrente: "+obtenerFrente(cola));
+        System.out.println("\nFrente: "+obtenerFrente(cola));*/
 
         
        
        
     }
     public static boolean poner(Cola cola) {
-        cola.poner("1");
-        cola.poner("2");
-        cola.poner("3");
-        cola.poner("4");
+        cola.poner('{');
+        cola.poner('5');
+        cola.poner('+');
+        cola.poner('8');
+        cola.poner('*');
+        cola.poner('(');
+        cola.poner('9');
+        cola.poner('-');
+        cola.poner('[');
+        cola.poner('4');
+        cola.poner('/');
+        cola.poner('2');
+        cola.poner(']');
+        cola.poner('+');
+        cola.poner('7');
+        cola.poner(')');
+        cola.poner('-');
+        cola.poner('1');
+        cola.poner('}');
         
         return true;//Como lo utilizo para probar y se que apila 
     }
@@ -59,6 +75,59 @@ public class TestCola {
     public static void vaciar(Cola cola) {
         cola.vaciar();
     }
-  
+    
+    public static Cola generarOtraCola(Cola c1) {
+    	Cola c2= new Cola();
+    	Pila pila= new Pila();
+    	
+    	while(!c1.esVacia()) {
+    		if(!c1.obtenerFrente().equals('$')) {
+    			pila.apilar(c1.obtenerFrente());
+    		}else {
+    			while(!pila.esVacia()) {
+    				c2.poner(pila.obtenerTope());
+    				pila.desapilar();
+    			}
+    		}
+    		c2.poner(c1.obtenerFrente());
+    		c1.sacar();
+    	}
+    	while(!pila.esVacia()) {
+    		c2.poner(pila.obtenerTope());
+    		pila.desapilar();
+    	}
+    	return c2;
+    }
+    
+    public static boolean verificarBalanceo(Cola q) {
+    	boolean balanceado=true;
+    	Pila pila=new Pila();
+    	Cola cola= new Cola();
+    	while(!q.esVacia()) {
+    		if(((char)q.obtenerFrente()=='{') || ((char)q.obtenerFrente()=='[') || ((char)q.obtenerFrente()=='(')) {
+    			pila.apilar(q.obtenerFrente());
+    		}else {
+    			if(((char)q.obtenerFrente()=='}') || ((char)q.obtenerFrente()==']') || ((char)q.obtenerFrente()==')')) {
+    				cola.poner(q.obtenerFrente());
+    			}
+    		}
+    		q.sacar();
+    	}
+    	
+    	while(!cola.esVacia() && !pila.esVacia() && balanceado) {
+    		char tope=(char)pila.obtenerTope();
+    		char frente=(char)cola.obtenerFrente();
+    		if((tope=='(' && frente!=')') || (tope=='[' && frente!=']') || (tope=='{' && frente!='}')) {
+    			balanceado=false;
+    		}else {
+    			pila.desapilar();
+    			cola.sacar();
+    		}
+    	}
+    	if((!cola.esVacia()||!pila.esVacia()) && balanceado) {
+    		balanceado=false;
+    	}
+    	return balanceado;
+    }
     
 }
