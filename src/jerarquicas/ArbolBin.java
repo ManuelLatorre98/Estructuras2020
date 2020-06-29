@@ -93,7 +93,6 @@ public class ArbolBin {
 			
 		}
 		
-		System.out.println(alturaIzq+" "+alturaDer);
 		alturaMax = alturaIzq;
 		if (alturaDer > alturaMax) {
 			alturaMax = alturaDer;
@@ -275,6 +274,34 @@ public class ArbolBin {
 		return nodo;
 	}
 	
+	public Lista obtenerAncestros(Object elem) {
+		Lista lista=new Lista();
+		if(this.raiz!=null) {
+			auxAncestros(this.raiz,elem,lista,null);
+		}
+		return lista;
+	}
+	
+	private boolean auxAncestros(NodoArbol flagNodo,Object elem, Lista lista, NodoArbol flagPadre) {
+		boolean encontrado=false;
+		if(flagNodo!=null) {
+			if((flagNodo.getElem().equals(elem))) {
+				encontrado=true;
+			}else {
+				encontrado=auxAncestros(flagNodo.getIzquierdo(),elem,lista,flagNodo);
+				if(encontrado==false) {
+				encontrado=auxAncestros(flagNodo.getDerecho(),elem,lista,flagNodo);
+				}
+			}
+			
+			if(flagPadre!=null && encontrado) {
+				lista.insertar(flagPadre.getElem(), lista.longitud()+1);
+			}
+			
+		}
+		
+		return encontrado;
+	}
 	
 	
 	

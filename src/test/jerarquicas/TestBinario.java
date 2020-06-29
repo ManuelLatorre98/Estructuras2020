@@ -100,7 +100,7 @@ public class TestBinario {
         System.out.println("Inserto el 25 como hijo D de 20 en CLON" + ((  b.insertar(25, 20, 'D')) ? sOk : sErr));
         System.out.println("Inserto el 35 como hijo I de 20 en CLON" + ((  b.insertar(35, 20, 'I')) ? sOk : sErr));
         System.out.println("\n"+AZUL+"CLON toString() \t\t\t"+b.toString()+"\n\n");
-        System.out.println(VERDE+"ORIGINAL toString()\t\t\t "+a.toString()+"\n\n");
+        System.out.println(VERDE+"ORIGINAL toString()\t "+a.toString()+"\n\n");
         
         System.out.println("Vacio el CLON");
         b.vaciar();

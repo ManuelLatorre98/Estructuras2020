@@ -1,5 +1,7 @@
 package Conjuntistas;
+
 import lineales.dinamicas.*;
+
 import jerarquicas.NodoArbol;
 
 public class ABB {
@@ -153,7 +155,7 @@ public class ABB {
 
 		}
 		flagNodo.setElem(candidato);
-		exito=true;
+		exito = true;
 		return exito;
 	}
 
@@ -171,7 +173,6 @@ public class ABB {
 
 		return candidato;
 	}
-
 
 	public boolean pertenece(Comparable elem) {
 		boolean pertenece = false;
@@ -196,89 +197,90 @@ public class ABB {
 		}
 		return pertenece;
 	}
-	
+
 	public Lista listar() {
-		Lista lista= new Lista();
-		if(this.raiz!=null) {
+		Lista lista = new Lista();
+		if (this.raiz != null) {
 			auxLista(this.raiz, lista);
 		}
 		return lista;
 	}
-	
+
 	private void auxLista(NodoArbol flagNodo, Lista lista) {
-		if(flagNodo!=null) {
-			auxLista(flagNodo.getIzquierdo(),lista);
-			lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
-			auxLista(flagNodo.getDerecho(),lista);
+		if (flagNodo != null) {
+			auxLista(flagNodo.getIzquierdo(), lista);
+			lista.insertar(flagNodo.getElem(), (lista.longitud() + 1));
+			auxLista(flagNodo.getDerecho(), lista);
 		}
 
 	}
-	
+
 	public Lista listarRango(Comparable elemMin, Comparable elemMax) {
-		Lista lista= new Lista();
-		if(this.raiz!=null) {
-			auxListarRango(this.raiz,lista,elemMin,elemMax);
+		Lista lista = new Lista();
+		if (this.raiz != null) {
+			auxListarRango(this.raiz, lista, elemMin, elemMax);
 		}
 		return lista;
 	}
-	
+
 	private void auxListarRango(NodoArbol flagNodo, Lista lista, Comparable elemMin, Comparable elemMax) {
-		if(flagNodo!=null) {
-				if(elemMin.compareTo(flagNodo.getElem())<0) { //si mi flagNodo es mayor igual al minimo
-					auxListarRango(flagNodo.getIzquierdo(),lista,elemMin,elemMax);
-				}
-				if(elemMin.compareTo(flagNodo.getElem())<=0 && elemMax.compareTo(flagNodo.getElem())>=0) {
-					lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
-				}
-				if(elemMax.compareTo(flagNodo.getElem())>0) {
-					auxListarRango(flagNodo.getDerecho(),lista,elemMin,elemMax);
+		if (flagNodo != null) {
+			if (elemMin.compareTo(flagNodo.getElem()) < 0) { // si mi flagNodo es mayor igual al minimo
+				auxListarRango(flagNodo.getIzquierdo(), lista, elemMin, elemMax);
+			}
+			if (elemMin.compareTo(flagNodo.getElem()) <= 0 && elemMax.compareTo(flagNodo.getElem()) >= 0) {
+				lista.insertar(flagNodo.getElem(), (lista.longitud() + 1));
+			}
+			if (elemMax.compareTo(flagNodo.getElem()) > 0) {
+				auxListarRango(flagNodo.getDerecho(), lista, elemMin, elemMax);
 			}
 		}
 	}
-	
+
 	public Comparable minimoElem() {
-		Comparable elem=null;
-		if(this.raiz!=null) {
-			elem=auxMinimoElem(this.raiz);
+		Comparable elem = null;
+		if (this.raiz != null) {
+			elem = auxMinimoElem(this.raiz);
 		}
 		return elem;
 	}
-	
+
 	private Comparable auxMinimoElem(NodoArbol flagNodo) {
-		Comparable elem=null;
-		if(flagNodo!=null) {
-			if(flagNodo.getIzquierdo()==null) {
-				elem=(Comparable)flagNodo.getElem();
-			}else {
-				elem= auxMinimoElem(flagNodo.getIzquierdo());
+		Comparable elem = null;
+		if (flagNodo != null) {
+			if (flagNodo.getIzquierdo() == null) {
+				elem = (Comparable) flagNodo.getElem();
+			} else {
+				elem = auxMinimoElem(flagNodo.getIzquierdo());
 			}
 		}
 		return elem;
 	}
-	
+
 	public Comparable maximoElem() {
-		Comparable elem=null;
-		if(this.raiz!=null) {
-			elem=auxMaximoElem(this.raiz);
+		Comparable elem = null;
+		if (this.raiz != null) {
+			elem = auxMaximoElem(this.raiz);
 		}
 		return elem;
 	}
-	
+
 	private Comparable auxMaximoElem(NodoArbol flagNodo) {
-		Comparable elem=null;
-		if(flagNodo!=null) {
-			if(flagNodo.getDerecho()==null) {
-				elem=(Comparable)flagNodo.getElem();
-			}else {
-				elem=auxMaximoElem(flagNodo.getDerecho());
+		Comparable elem = null;
+		if (flagNodo != null) {
+			if (flagNodo.getDerecho() == null) {
+				elem = (Comparable) flagNodo.getElem();
+			} else {
+				elem = auxMaximoElem(flagNodo.getDerecho());
 			}
 		}
 		return elem;
 	}
-	
+
 	public boolean vacio() {
-		return this.raiz==null;
+		return this.raiz == null;
 	}
+
 	public String toString() {
 		String cadena = "(Vacio)";
 		if (this.raiz != null) {
@@ -286,7 +288,7 @@ public class ABB {
 		}
 		return cadena;
 	}
-	
+
 	private String auxToString(NodoArbol flagNodo) {
 		String cadena = "";
 		if (flagNodo != null) {
@@ -310,5 +312,105 @@ public class ABB {
 			cadena += auxToString(flagNodo.getDerecho());
 		}
 		return cadena;
+	}
+
+	public Lista listarMayoresQue(Comparable valor, Comparable elem) {
+		Lista lista = new Lista();
+		if (this.raiz != null) {
+			NodoArbol nodoElem = buscoElem(this.raiz, elem);
+			if (nodoElem != null) {
+				auxListarMayoresQue(nodoElem, lista, valor);
+			}
+		}
+		return lista;
+	}
+
+	private void auxListarMayoresQue(NodoArbol flagNodo, Lista lista, Comparable valor) {
+		if (flagNodo != null) {
+			if (valor.compareTo(flagNodo.getElem()) < 0) {
+				lista.insertar(flagNodo.getElem(), lista.longitud() + 1);
+			}
+			auxListarMayoresQue(flagNodo.getIzquierdo(), lista, valor);
+			auxListarMayoresQue(flagNodo.getDerecho(), lista, valor);
+		}
+	}
+
+	private NodoArbol buscoElem(NodoArbol flagNodo, Comparable elem) {
+		NodoArbol nodoElem = null;
+		if (flagNodo != null) {
+			if (elem.compareTo(flagNodo.getElem()) == 0) {
+				nodoElem = flagNodo;
+			} else {
+				if (elem.compareTo(flagNodo.getElem()) < 0) {
+					nodoElem = buscoElem(flagNodo.getIzquierdo(), elem);
+				} else {
+					nodoElem = buscoElem(flagNodo.getDerecho(), elem);
+				}
+			}
+		}
+		return nodoElem;
+	}
+
+	public void eliminarMin() {
+		if (this.raiz != null) {
+			eliminarMinAux(this.raiz);
+		}
+	}
+
+	private boolean eliminarMinAux(NodoArbol flagNodo) {
+		boolean eliminado = false;
+		if (flagNodo != null) {
+			if (this.raiz.getIzquierdo() == null) {
+				this.raiz = this.raiz.getDerecho();
+				eliminado = true;
+			} else {
+				if (flagNodo.getIzquierdo() != null && flagNodo.getIzquierdo().getIzquierdo() == null) {
+					flagNodo.setIzquierdo(flagNodo.getIzquierdo().getDerecho());
+					eliminado = true;
+				} else {
+					eliminado = eliminarMinAux(flagNodo.getIzquierdo());
+				}
+			}
+		}
+		return eliminado;
+	}
+
+	public boolean equals(ABB otro) {
+		boolean iguales = false;
+		iguales = auxEquals(this.raiz, otro.raiz, otro);
+		return iguales;
+	}
+
+	private boolean auxEquals(NodoArbol flagNodo, NodoArbol flagNodoOtro, ABB otro) {
+		boolean iguales = true;
+		if (flagNodo != null && flagNodoOtro != null) {
+			if (flagNodo == this.raiz && flagNodoOtro == otro.raiz) {
+				if (!flagNodo.getElem().equals(flagNodoOtro.getElem())) {
+					iguales = false;
+				}
+			}
+			if ((flagNodo.getIzquierdo() == null && flagNodoOtro.getIzquierdo() != null)
+					|| (flagNodo.getIzquierdo() != null && flagNodoOtro.getIzquierdo() == null)) {
+				iguales = false;
+			} else {
+				if ((flagNodo.getDerecho() == null && flagNodoOtro.getDerecho() != null)
+						|| (flagNodo.getDerecho() != null && flagNodoOtro.getDerecho() == null)) {
+					iguales = false;
+				} else {
+					if (flagNodo.getIzquierdo() != null && flagNodo.getDerecho() != null
+							&& flagNodoOtro.getIzquierdo() != null && flagNodoOtro.getDerecho() != null) {
+						if (!flagNodo.getIzquierdo().getElem().equals(flagNodoOtro.getIzquierdo().getElem())
+								|| !flagNodo.getDerecho().getElem().equals(flagNodoOtro.getDerecho().getElem())) {
+							iguales = false;
+						}
+					}
+				}
+			}
+			if (iguales) {
+				iguales = auxEquals(flagNodo.getIzquierdo(), flagNodoOtro.getIzquierdo(), otro);
+				iguales = auxEquals(flagNodo.getDerecho(), flagNodoOtro.getDerecho(), otro);
+			}
+		}
+		return iguales;
 	}
 }

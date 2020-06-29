@@ -54,26 +54,16 @@ public class ArbolGen {
 
 	public boolean pertenece(Object elem) {
 		boolean encontrado = false;
+		NodoGen nodoElem;
 		if (this.raiz != null) {
-			encontrado = auxPertenece(this.raiz, elem);
-		}
-		return encontrado;
-	}
-
-	private boolean auxPertenece(NodoGen flagNodo, Object elem) {
-		boolean encontrado = false;
-		if (flagNodo != null) {
-			if (flagNodo.getElem().equals(elem)) {
-				encontrado = true;
-			} else {
-				encontrado = auxPertenece(flagNodo.getHijoIzq(), elem);
-				if (!encontrado) {
-					encontrado = auxPertenece(flagNodo.getHermanoDer(), elem);
-				}
+			nodoElem=buscaElemPadre(this.raiz,elem); //Cumple la misma funcion que un auxBuscarElem
+			if(nodoElem!=null) {
+				encontrado=true;
 			}
 		}
 		return encontrado;
 	}
+
 
 	public boolean esVacio() {
 		return this.raiz == null;
@@ -226,11 +216,8 @@ public class ArbolGen {
 	private void auxListarPreOrden(NodoGen flagNodo, Lista lista) {
 		if (flagNodo != null) {
 			lista.insertar(flagNodo.getElem(), lista.longitud() + 1);
-
 			if (flagNodo.getHijoIzq() != null) {
-				auxListarPreOrden(flagNodo.getHijoIzq(), lista);
-
-				NodoGen hijo = flagNodo.getHijoIzq().getHermanoDer();
+				NodoGen hijo = flagNodo.getHijoIzq();
 				while (hijo != null) {
 					auxListarPreOrden(hijo, lista);
 					hijo = hijo.getHermanoDer();
@@ -277,9 +264,7 @@ public class ArbolGen {
 	private void auxListarPosOrden(NodoGen flagNodo, Lista lista) {
 		if (flagNodo != null) {
 			if (flagNodo.getHijoIzq() != null) {
-				auxListarPosOrden(flagNodo.getHijoIzq(), lista);
-
-				NodoGen hijo = flagNodo.getHijoIzq().getHermanoDer();
+				NodoGen hijo = flagNodo.getHijoIzq();
 				while (hijo != null) {
 					auxListarPosOrden(hijo, lista);
 					hijo = hijo.getHermanoDer();
@@ -310,45 +295,47 @@ public class ArbolGen {
 	}
 
 	public String toString() {
-		String cadena = "(Vacio)";
-		if (this.raiz != null) {
-			cadena = auxToString(this.raiz);
-		}
-		return cadena;
+		return toStringAux(this.raiz);
 	}
 
-	private String auxToString(NodoGen flagNodo) {
-		String cadena = "";
+	private String toStringAux(NodoGen flagNodo) {
+		String cadena="";
+		if(flagNodo!=null) {
+			cadena+= flagNodo.getElem().toString()+" --> ";
+			NodoGen hijo= flagNodo.getHijoIzq();
+			while(hijo!=null) {
+				cadena+=hijo.getElem().toString()+", ";
+				hijo=hijo.getHermanoDer();
+			}
+			
+			hijo=flagNodo.getHijoIzq();
+			while(hijo!=null) {
+				cadena+= "\n"+ toStringAux(hijo);
+				hijo= hijo.getHermanoDer();
+			}
+		}
+  return cadena;
+}
+	public Lista frontera() {
+		Lista lista= new Lista();
+		if(this.raiz!=null) {
+			auxFrontera(this.raiz, lista);
+		}
+		return lista;
+	}
+	private void auxFrontera(NodoGen flagNodo, Lista lista) {
 		if (flagNodo != null) {
-			if (flagNodo.equals(this.raiz)) {
-				System.out.print("RAIZ: ");
-			}
-			cadena += "(" + flagNodo.getElem() + ", ";
-
 			if (flagNodo.getHijoIzq() != null) {
-				cadena += "HI: " + flagNodo.getHijoIzq().getElem() + ", ";
-			} else {
-				cadena += "HI: null, ";
-			}
-
-			if (flagNodo.getHermanoDer() != null) {
-				cadena += "HeD: " + flagNodo.getHermanoDer().getElem() + "), ";
-			} else {
-				cadena += "HeD: null), ";
-			}
-
-			if (flagNodo.getHijoIzq() != null) {
-				cadena += auxToString(flagNodo.getHijoIzq());
-
-				NodoGen hijo = flagNodo.getHijoIzq().getHermanoDer();
+				NodoGen hijo = flagNodo.getHijoIzq();
 				while (hijo != null) {
-					cadena += auxToString(hijo);
+					auxFrontera(hijo, lista);
 					hijo = hijo.getHermanoDer();
 				}
 			}
+			if(flagNodo.getHijoIzq()==null) {
+				lista.insertar(flagNodo.getElem(), lista.longitud()+1);
+			}
 		}
-
-		return cadena;
 	}
-
+	
 }

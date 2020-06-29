@@ -4,15 +4,15 @@ import lineales.dinamicas.Lista;
 public class testArbolBin {
 	public static void main(String[] args) {
 		 ArbolBin arbol=new ArbolBin();
-	     arbol.insertar(1, null, 'R');
-	     arbol.insertar(2, 1, 'I');
-	     arbol.insertar(3, 1, 'D');	
-	     arbol.insertar(4, 2, 'I');
-	     arbol.insertar(5, 2, 'D');
-	 
-	    
+	     arbol.insertar('A', null, 'R');
+	     arbol.insertar('B', 'A', 'I');
+	     arbol.insertar('C', 'A', 'D');
+	     arbol.insertar('D', 'B', 'I');
+	     arbol.insertar('E', 'C', 'I');
+	     arbol.insertar('F', 'C', 'D');
+	     arbol.insertar('G', 'E', 'I');
+	     arbol.insertar('H', 'E', 'D');
 	     System.out.println(arbol.toString());
-	     NodoArbol nodo=arbol.obtenerNodo(20);
-	     System.out.println(arbol.altura());
+	     System.out.println(arbol.obtenerAncestros('F'));
 	}
 }

@@ -14,11 +14,9 @@ public class testArbolGen {
         arbol.insertar('F', 'B');
         arbol.insertar('G', 'B'); 
         arbol.insertar('H', 'D'); 
-        
+      
        
         System.out.println(arbol.toString());  
-        ArbolGen clon= arbol.clone();
-       
-        System.out.println(arbol.ancestros('G'));
+        System.out.println(arbol.frontera().toString());
     }
 }

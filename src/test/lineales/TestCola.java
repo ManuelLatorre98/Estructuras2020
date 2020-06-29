@@ -9,7 +9,7 @@ public class TestCola {
         //Apila
         System.out.println("Poner: "+poner(cola));
         System.out.println(cola.toString());
-        System.out.println(verificarBalanceo(cola));
+        System.out.println(colaToLista(cola,2).toString());
        /* System.out.println(generarOtraCola(cola).toString());
         
         //Saca
@@ -37,25 +37,17 @@ public class TestCola {
        
     }
     public static boolean poner(Cola cola) {
-        cola.poner('{');
-        cola.poner('5');
-        cola.poner('+');
-        cola.poner('8');
-        cola.poner('*');
-        cola.poner('(');
-        cola.poner('9');
-        cola.poner('-');
-        cola.poner('[');
-        cola.poner('4');
-        cola.poner('/');
-        cola.poner('2');
-        cola.poner(']');
-        cola.poner('+');
-        cola.poner('7');
-        cola.poner(')');
-        cola.poner('-');
-        cola.poner('1');
-        cola.poner('}');
+        cola.poner('A');
+        cola.poner('B');
+        cola.poner('C');
+        cola.poner('D');
+        cola.poner('E');
+        cola.poner('F');
+        cola.poner('G');
+        cola.poner('H');
+        cola.poner('I');
+        cola.poner('J');
+        cola.poner('K');
         
         return true;//Como lo utilizo para probar y se que apila 
     }
@@ -130,4 +122,64 @@ public class TestCola {
     	return balanceado;
     }
     
+    public static Lista colaToLista(Cola cola, int t) {
+    	Cola colaClon= cola.clone();
+    	Cola colaAux1= new Cola();
+    	Cola colaAux2= new Cola();
+    	Pila pila= new Pila();
+    	Lista lista= new Lista();
+    	int cont=0;
+    	int contLista=1;
+    	while(!colaClon.esVacia()) {
+    		while(cont<t && !colaClon.esVacia()) {
+    			colaAux1.poner(colaClon.obtenerFrente());
+    			colaAux2.poner(colaClon.obtenerFrente());
+    			pila.apilar(colaClon.obtenerFrente());
+    			colaClon.sacar();
+    			cont++;
+    		}
+    		cont=0;
+    		while(!colaAux1.esVacia() || !colaAux2.esVacia() || !pila.esVacia()) {
+    			if(!colaAux1.esVacia()) {
+    			lista.insertar(colaAux1.obtenerFrente(), contLista);
+    			colaAux1.sacar();
+    			contLista++;
+    			}else {
+    				if(!colaAux2.esVacia()) {
+    					lista.insertar(colaAux2.obtenerFrente(), contLista);
+    					colaAux2.sacar();
+    					contLista++;
+    				}else {
+    					if(!pila.esVacia()) {
+    						lista.insertar(pila.obtenerTope(), contLista);
+    						pila.desapilar();
+    						contLista++;
+    					}
+    				}
+    			}
+    		}
+    		if(!colaClon.esVacia()) {
+    		lista.insertar('#', contLista);
+    		contLista++;
+    		lista.insertar('#', contLista);
+    		contLista++;
+    		}
+    	}
+    	return lista;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
