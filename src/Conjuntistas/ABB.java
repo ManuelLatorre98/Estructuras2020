@@ -325,16 +325,6 @@ public class ABB {
 		return lista;
 	}
 
-	private void auxListarMayoresQue(NodoArbol flagNodo, Lista lista, Comparable valor) {
-		if (flagNodo != null) {
-			if (valor.compareTo(flagNodo.getElem()) < 0) {
-				lista.insertar(flagNodo.getElem(), lista.longitud() + 1);
-			}
-			auxListarMayoresQue(flagNodo.getIzquierdo(), lista, valor);
-			auxListarMayoresQue(flagNodo.getDerecho(), lista, valor);
-		}
-	}
-
 	private NodoArbol buscoElem(NodoArbol flagNodo, Comparable elem) {
 		NodoArbol nodoElem = null;
 		if (flagNodo != null) {
@@ -349,6 +339,16 @@ public class ABB {
 			}
 		}
 		return nodoElem;
+	}
+
+	private void auxListarMayoresQue(NodoArbol flagNodo, Lista lista, Comparable valor) {
+		if (flagNodo != null) {
+			if (valor.compareTo(flagNodo.getElem()) < 0) {
+				lista.insertar(flagNodo.getElem(), lista.longitud() + 1);
+			}
+			auxListarMayoresQue(flagNodo.getIzquierdo(), lista, valor);
+			auxListarMayoresQue(flagNodo.getDerecho(), lista, valor);
+		}
 	}
 
 	public void eliminarMin() {
@@ -413,4 +413,224 @@ public class ABB {
 		}
 		return iguales;
 	}
+
+	public Comparable mejorCandidato(Comparable elem) {
+		NodoArbol nodoElem = buscoNodoElem(this.raiz, elem);
+		Comparable candidatoIzq;
+		Comparable candidatoDer;
+		Comparable mejorCandidato = -1;
+		if (nodoElem == null) {
+			mejorCandidato = 0;
+		} else {
+			if (nodoElem.getIzquierdo() == null && nodoElem.getDerecho() == null) {
+				mejorCandidato = -1;
+			} else {
+				candidatoIzq = getCandidatoIzq(nodoElem.getIzquierdo());
+				candidatoDer = getCandidatoDer(nodoElem.getDerecho());
+				if (candidatoDer == null) {
+					mejorCandidato = candidatoIzq;
+				} else {
+					if (candidatoIzq == null) {
+						mejorCandidato = candidatoDer;
+					} else {
+						if (Math.abs((int) elem - (int) candidatoIzq) <= Math.abs((int) elem - (int) candidatoDer)) {
+							mejorCandidato = candidatoIzq;
+						} else {
+							mejorCandidato = candidatoDer;
+						}
+					}
+				}
+
+			}
+		}
+		return mejorCandidato;
+	}
+
+	private Comparable getCandidatoIzq(NodoArbol flagNodo) {
+		Comparable candidatoIzq = null;
+		if (flagNodo != null) {
+			if (flagNodo.getDerecho() == null) {
+				candidatoIzq = (Comparable) flagNodo.getElem();
+			} else {
+				candidatoIzq = getCandidatoIzq(flagNodo.getDerecho());
+			}
+		}
+		return candidatoIzq;
+	}
+
+	private Comparable getCandidatoDer(NodoArbol flagNodo) {
+		Comparable candidatoDer = null;
+		if (flagNodo != null) {
+			if (flagNodo.getIzquierdo() == null) {
+				candidatoDer = (Comparable) flagNodo.getElem();
+			} else {
+				candidatoDer = getCandidatoDer(flagNodo.getIzquierdo());
+			}
+		}
+		return candidatoDer;
+	}
+
+	private NodoArbol buscoNodoElem(NodoArbol flagNodo, Comparable elem) {
+		NodoArbol nodoElem = null;
+		if (flagNodo != null) {
+			if (elem.compareTo(flagNodo.getElem()) == 0) {
+				nodoElem = flagNodo;
+			} else {
+				if (elem.compareTo(flagNodo.getElem()) < 0) {
+					nodoElem = buscoNodoElem(flagNodo.getIzquierdo(), elem);
+				} else {
+					nodoElem = buscoNodoElem(flagNodo.getDerecho(), elem);
+				}
+			}
+		}
+		return nodoElem;
+	}
+
+	public int amplitudSubArbol(Comparable elem) {
+		NodoArbol nodoElem = buscoNodoElem(this.raiz, elem);
+		int amplitud = 0;
+		if (nodoElem == null) {
+			amplitud = -1;
+		} else {
+			Comparable menor = getMenor(nodoElem);
+			Comparable mayor = getMayor(nodoElem);
+			amplitud = Math.abs((int) menor - (int) mayor);
+		}
+		return amplitud;
+
+	}
+
+	private Comparable getMenor(NodoArbol flagNodo) {
+		Comparable menor = null;
+		if (flagNodo != null) {
+			if (flagNodo.getIzquierdo() == null) {
+				menor = (Comparable) flagNodo.getElem();
+			} else {
+				menor = getMenor(flagNodo.getIzquierdo());
+			}
+		}
+		return menor;
+	}
+
+	private Comparable getMayor(NodoArbol flagNodo) {
+		Comparable mayor = null;
+		if (flagNodo != null) {
+			if (flagNodo.getDerecho() == null) {
+				mayor = (Comparable) flagNodo.getElem();
+			} else {
+				mayor = getMayor(flagNodo.getDerecho());
+			}
+		}
+		return mayor;
+	}
+
+	public int diferenciaCandidatos(Comparable elem) {
+		NodoArbol nodoElem = buscoNodoElem(this.raiz, elem);
+		int diferencia = 0;
+		Comparable candidatoIzq;
+		Comparable candidatoDer;
+		if (nodoElem == null) {
+			diferencia = -1;
+		} else {
+			if (nodoElem.getIzquierdo() == null || nodoElem.getDerecho() == null) {
+				diferencia = -2;
+			} else {
+				candidatoIzq = getCandidatoIzq(nodoElem.getIzquierdo());
+				candidatoDer = getCandidatoDer(nodoElem.getDerecho());
+				diferencia = Math.abs((int) candidatoIzq - (int) candidatoDer);
+			}
+
+		}
+		return diferencia;
+	}
+
+	public Lista listarMayoresQu(Comparable valor, Comparable elem) {
+		Lista lista = new Lista();
+		NodoArbol nodoElem;
+		if (this.raiz != null) {
+			nodoElem = buscarNodoElem(this.raiz, elem);
+			auxListarMayoresQue(nodoElem, valor, lista);
+		}
+		return lista;
+	}
+
+	private void auxListarMayoresQue(NodoArbol flagNodo, Comparable valor, Lista lista) {
+		if (flagNodo != null) {
+			System.out.println(flagNodo.getElem());
+			if (valor.compareTo(flagNodo.getElem()) < 0) {
+				lista.insertar(flagNodo.getElem(), lista.longitud() + 1);
+				auxListarMayoresQue(flagNodo.getIzquierdo(), valor, lista);
+			}
+			auxListarMayoresQue(flagNodo.getDerecho(), valor, lista);
+		}
+	}
+
+	public boolean eliminarElemSiguiente(Comparable elem) {
+		NodoArbol nodoElem = buscarNodoElem(this.raiz, elem);
+		boolean eliminado= false;
+		if(nodoElem!=null) {
+		eliminado = auxEliminarElemSiguiente(nodoElem);
+		}
+		return eliminado;
+	}
+
+	private boolean auxEliminarElemSiguiente(NodoArbol flagNodo) {
+		boolean eliminado = false;
+		if(flagNodo.getDerecho()!=null && flagNodo.getDerecho().getIzquierdo()!=null) {
+			eliminado=auxEliminarElemSiguienteConHI(flagNodo.getDerecho());
+		}else {
+			if(flagNodo.getDerecho()!=null) {
+				flagNodo.setDerecho(flagNodo.getDerecho().getDerecho());
+				eliminado=true;
+			}
+		}
+		
+
+		return eliminado;
+
+	}
+
+	private boolean auxEliminarElemSiguienteConHI(NodoArbol flagNodo) {
+		boolean eliminado = false;
+		if (flagNodo != null) {
+			if (flagNodo.getIzquierdo() != null && flagNodo.getIzquierdo().getIzquierdo() == null) {
+				flagNodo.setIzquierdo(flagNodo.getIzquierdo().getDerecho());
+				eliminado = true;
+			} else {
+				eliminado = auxEliminarElemSiguienteConHI(flagNodo.getIzquierdo());
+			}
+		}
+		return eliminado;
+	}
+
+	private NodoArbol buscarNodoElem(NodoArbol flagNodo, Comparable elem) {
+		NodoArbol nodoElem = null;
+		if (flagNodo != null) {
+			if (elem.compareTo(flagNodo.getElem()) == 0) {
+				nodoElem = flagNodo;
+			} else {
+				if (elem.compareTo(flagNodo.getElem()) < 0) {
+					nodoElem = buscarNodoElem(flagNodo.getIzquierdo(), elem);
+				} else {
+					nodoElem = buscarNodoElem(flagNodo.getDerecho(), elem);
+				}
+			}
+		}
+		return nodoElem;
+	}
+	public Lista listarInorden() {
+		Lista lista= new Lista();
+		inOrden(this.raiz,lista);
+		return lista;
+	}
+	
+	private void inOrden(NodoArbol flagNodo, Lista lista) {
+		if(flagNodo!=null) {
+			inOrden(flagNodo.getIzquierdo(),lista);
+			lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
+			inOrden(flagNodo.getDerecho(),lista);
+		}
+		
+	}
+
 }

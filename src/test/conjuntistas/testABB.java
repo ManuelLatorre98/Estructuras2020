@@ -5,24 +5,22 @@ import Conjuntistas.ABB;
 public class testABB {
 	public static void main(String[] args) {
 		ABB arbol=new ABB();
-		arbol.insertar('A');
-		arbol.insertar('B');
-		arbol.insertar('C');
-		arbol.insertar('D');
-		arbol.insertar('E');
-		arbol.insertar('F');
-		arbol.insertar('G');
+		arbol.insertar(8);
+		arbol.insertar(3);
+		arbol.insertar(10);
+		arbol.insertar(1);
+		arbol.insertar(6);
+		arbol.insertar(4);
+		arbol.insertar(7);
+		arbol.insertar(10);
+		arbol.insertar(14);
+		arbol.insertar(13);
+		arbol.insertar(5);
 		
-		ABB arbol2= new ABB();
-		arbol2.insertar('A');
-		arbol2.insertar('B');
-		arbol2.insertar('C');
-		arbol2.insertar('D');
-		arbol2.insertar('E');
-		arbol2.insertar('Y');
-		arbol2.insertar('T');
-
-		System.out.println(arbol.equals(arbol2));
+		System.out.println(arbol.toString());
+		System.out.println(arbol.listarInorden().toString());
+		
+		
 		
 	}
 }
