@@ -1,32 +1,30 @@
 package Conjuntistas;
 
 public class NodoAVL {
-	private Comparable elem;
+	private Object elem;
 	private int altura;
 	private NodoAVL derecho;
 	private NodoAVL izquierdo;
 
-	public NodoAVL(Comparable elemen, NodoAVL hijoIzq, NodoAVL hijoDer) {
+	public NodoAVL(Object elemen, NodoAVL hijoIzq, NodoAVL hijoDer) {
 		this.elem = elemen;
 		this.izquierdo = hijoIzq;
 		this.derecho = hijoDer;
 		auxRecalcularAltura(this);
 	}
 	
-	public NodoAVL(Comparable elemen) {
+	public NodoAVL(Object elemen) {
 		this.elem = elemen;
 		this.izquierdo = null;
 		this.derecho = null;
 		auxRecalcularAltura(this);
 	}
 
-	public Comparable getElem() {
+	public Object getElem() {
 		return this.elem;
 	}
 
 	public int getAltura() {
-			System.out.println("hola");
-		
 		return this.altura;
 	}
 
@@ -38,7 +36,7 @@ public class NodoAVL {
 		return this.derecho;
 	}
 
-	public void setElem(Comparable elemen) {
+	public void setElem(Object elemen) {
 		this.elem = elemen;
 	}
 
