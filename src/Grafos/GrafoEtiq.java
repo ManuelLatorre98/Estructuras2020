@@ -247,7 +247,7 @@ public class GrafoEtiq {
 	private Lista caminoMasCortoAux(NodoVert flagNodo,Object destino,Lista camino, Lista masCorto) {
 		if(flagNodo!=null) {
 			camino.insertar(flagNodo.getElem().toString(), camino.longitud()+1);//inserto el destino
-			if(flagNodo.equals(destino)) {//Si llegue al destino
+			if(flagNodo.getElem().equals(destino)) {//Si llegue al destino
 				if((camino.longitud()<masCorto.longitud()) || masCorto.longitud()==0) {//Si el camino es menor al mas corto o es el primero sera el menor
 					masCorto=camino.clone();
 				}
@@ -439,4 +439,103 @@ public class GrafoEtiq {
 		}
 		return caminoMin;
 	}*/
+	
+	/*public Lista caminoDeLongitudMenorA(Object origen, Object destino, int longMax) {
+		NodoVert nodoOrigen= this.ubicarVertice(origen);
+		NodoVert nodoDestino= this.ubicarVertice(destino);
+		Lista caminoMin= new Lista();
+		Lista camino=new Lista();
+		if(nodoOrigen!=null && nodoDestino!=null) {
+			caminoMin=auxCaminoDeLongMenorA(nodoOrigen,destino,longMax,0,camino,caminoMin);
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxCaminoDeLongMenorA(NodoVert flagNodo, Object destino, int longMax, int longi, Lista camino, Lista caminoMin) {
+		if(flagNodo!=null && longi<=longMax && caminoMin.esVacia()) {
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getElem().equals(destino)) {
+				caminoMin=camino.clone();
+			}else {
+				NodoAdy ady= flagNodo.getPrimerAdy();
+				while(ady!=null) {
+					if(camino.localizar(ady.getVertice().getElem())==-1) {
+						caminoMin=auxCaminoDeLongMenorA(ady.getVertice(),destino,longMax,longi+(int)ady.getEtiqueta(),camino,caminoMin);
+					}
+					ady=ady.getSigAdyacente();
+				}
+			}
+			camino.eliminar(camino.longitud());
+		}
+		return caminoMin;
+	}*/
+	
+	/*public Lista caminosDePesoEntre(Object origen, Object destino, int pesoMin, int pesoMax) {
+		NodoVert nodoOrigen= ubicarVertice(origen);
+		NodoVert nodoDest= ubicarVertice(destino);
+		Lista camino=new Lista();
+		Lista caminoMin= new Lista();
+		if(nodoOrigen!=null && nodoDest!=null) {
+			caminoMin=auxCaminosDePesoEntre(nodoOrigen,destino,pesoMin,pesoMax,camino,caminoMin,0);
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxCaminosDePesoEntre(NodoVert flagNodo, Object destino, int pesoMin, int pesoMax, Lista camino, Lista caminoEnt, int peso) {
+		if(flagNodo!=null && peso<=pesoMax && caminoEnt.esVacia()) {
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getElem().equals(destino) && peso>=pesoMin) {
+				caminoEnt=camino.clone();
+			}else {
+				NodoAdy ady=flagNodo.getPrimerAdy();
+				while(ady!=null) {
+					if(camino.localizar(ady.getVertice().getElem())==-1) {
+						caminoEnt=this.auxCaminosDePesoEntre(ady.getVertice(), destino, pesoMin, pesoMax, camino, caminoEnt, peso+(int)ady.getEtiqueta());
+					}
+					ady=ady.getSigAdyacente();
+				}
+			}
+			camino.eliminar(camino.longitud());
+		}
+		return caminoEnt;
+	}*/
+	
+	public Lista caminoConIntermedio(Object origen, Object medio,Object destino) {
+		NodoVert nodoOrigen= ubicarVertice(origen);
+		NodoVert nodoMedio= ubicarVertice(medio);
+		NodoVert nodoDest= ubicarVertice(destino);
+		Lista camino=new Lista();
+		Lista caminoMin= new Lista();
+		caminoMin.insertar(-1, 1);
+		if(nodoOrigen!=null && nodoMedio!=null &&nodoDest!=null) {
+			caminoMin=auxCaminoConIntermedio(nodoOrigen,medio, destino, camino,caminoMin,false,0);
+			caminoMin.eliminar(1);
+		}
+		return caminoMin;
+	}
+	
+	public Lista auxCaminoConIntermedio(NodoVert flagNodo,Object medio, Object destino, Lista camino, Lista caminoMin, boolean pasoMed,int peso) {
+		if(flagNodo!=null && peso<=(int)caminoMin.recuperar(1) || (int) caminoMin.recuperar(1)==-1) {
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getElem().equals(destino) && pasoMed) {
+				caminoMin=camino.clone();
+				caminoMin.insertar(peso, 1);
+			}else {
+				if(!flagNodo.getElem().equals(destino)) {
+					if(flagNodo.getElem().equals(medio)) {
+						pasoMed=true;
+					}
+					NodoAdy ady=flagNodo.getPrimerAdy();
+					while(ady!=null) {
+						if(camino.localizar(ady.getVertice().getElem())==-1) {
+							caminoMin=this.auxCaminoConIntermedio(ady.getVertice(), medio, destino, camino, caminoMin, pasoMed, peso+(int)ady.getEtiqueta());
+						}
+						ady=ady.getSigAdyacente();
+					}
+				}
+			}
+			camino.eliminar(camino.longitud());
+		}
+		return caminoMin;
+	}
 }
