@@ -1,5 +1,8 @@
 package Conjuntistas;
 
+import jerarquicas.NodoArbol;
+import lineales.dinamicas.Lista;
+
 public class ArbolHeap {
 	private int tamaño = 100;
 	private Comparable[] heap;
@@ -112,6 +115,21 @@ public class ArbolHeap {
 		}
 
 		return cadena;
+	}
+	
+	public Lista listarInorden() {
+		Lista lista= new Lista();
+		inOrden(this.raiz,lista);
+		return lista;
+	}
+	
+	private void inOrden(NodoArbol flagNodo, Lista lista) {
+		if(flagNodo!=null) {
+			inOrden(flagNodo.getIzquierdo(),lista);
+			lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
+			inOrden(flagNodo.getDerecho(),lista);
+		}
+		
 	}
 
 }

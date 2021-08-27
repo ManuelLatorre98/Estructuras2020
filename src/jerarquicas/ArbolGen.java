@@ -314,8 +314,8 @@ public class ArbolGen {
 				hijo= hijo.getHermanoDer();
 			}
 		}
-  return cadena;
-}
+		return cadena;
+	}
 	public Lista frontera() {
 		Lista lista= new Lista();
 		if(this.raiz!=null) {
@@ -338,4 +338,120 @@ public class ArbolGen {
 		}
 	}
 	
+	public Lista listaQueJustificaLaAltura() {//Camino de raiz a hoja mas lejana
+		Lista camino=new Lista();
+		Lista caminoMin=new Lista();
+		if(this.raiz!=null) {
+			caminoMin=auxListaQueJustificaLaAltura(this.raiz,camino,caminoMin);
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxListaQueJustificaLaAltura(NodoGen flagNodo,Lista camino, Lista caminoMin) {
+		if(flagNodo!=null) {
+			System.out.println(flagNodo.getElem());
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			caminoMin=auxListaQueJustificaLaAltura(flagNodo.getHijoIzq(),camino,caminoMin);
+			camino.eliminar(camino.longitud());
+			caminoMin=auxListaQueJustificaLaAltura(flagNodo.getHermanoDer(),camino,caminoMin);
+		}else {
+			if(camino.longitud()>caminoMin.longitud()) {
+				caminoMin=camino.clone();
+			}
+		}
+		return caminoMin;
+	}//Si busco el mas corto puede dar problema que hermano derecho sea null
+	
+	public int descendienteMasCercano(Object D) {
+		int nivelMasCercano=-1;
+		if(this.raiz!=null) {
+			nivelMasCercano=auxDescendienteMasCercano(this.raiz,D, 0, -1);
+		}
+		return nivelMasCercano;
+	}
+	
+	private int auxDescendienteMasCercano(NodoGen flagNodo,Object elem,int nivelAct, int nivelMin) {
+		if(flagNodo!=null) {
+			if(flagNodo.getElem().equals(elem)) {
+				nivelMin=nivelAct;
+			}else {
+				nivelMin=auxDescendienteMasCercano(flagNodo.getHermanoDer(),elem,nivelAct,nivelMin);
+				if(nivelMin==-1 || nivelAct<nivelMin) {
+					nivelMin=auxDescendienteMasCercano(flagNodo.getHijoIzq(),elem,nivelAct+1,nivelMin);
+				}
+			}
+		}
+		return nivelMin;
+	}
+	
+	public int descendienteMasLejano(Object d) {
+		int menorNivel=-1;
+		if(this.raiz!=null) {
+			menorNivel=auxDescendienteMasLejano(this.raiz, d, 0, 0);
+		}
+		return menorNivel;
+	}
+	
+	private int auxDescendienteMasLejano(NodoGen flagNodo,Object elem,int nivelAct, int nivelMax) {
+		if(flagNodo!=null) {
+			if(flagNodo.getElem().equals(elem) && nivelAct>nivelMax) {
+				nivelMax=nivelAct;
+			}
+			nivelMax=auxDescendienteMasLejano(flagNodo.getHijoIzq(),elem, nivelAct+1,nivelMax);
+			nivelMax=auxDescendienteMasLejano(flagNodo.getHermanoDer(),elem,nivelAct,nivelMax);
+		}
+		return nivelMax;
+	}
+	
+	public Lista caminoHojaMasCercana() {
+		Lista camino= new Lista();
+		Lista caminoMin= new Lista();
+		if(this.raiz!=null) {
+			caminoMin=auxCaminoHojaMasCercana(this.raiz, camino,caminoMin);//Intercambiable
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxCaminoHojaMasCercana(NodoGen flagNodo, Lista camino, Lista caminoMin) {
+		if(flagNodo!=null) {
+			System.out.println(flagNodo.getElem());
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getHijoIzq()==null) {
+				caminoMin=camino.clone();
+			}else {
+				if(camino.longitud()+1<caminoMin.longitud() || caminoMin.esVacia()) {
+					caminoMin=this.auxCaminoHojaMasCercana(flagNodo.getHijoIzq(), camino, caminoMin);
+					camino.eliminar(camino.longitud());
+				}
+				
+				if(camino.longitud()<caminoMin.longitud() || caminoMin.esVacia()) {
+					camino.eliminar(camino.longitud());
+					caminoMin=this.auxCaminoHojaMasCercana(flagNodo.getHermanoDer(), camino, caminoMin);
+				}
+			}
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxCaminoHojaMasCercana2(NodoGen flagNodo, Lista camino, Lista caminoMin) {
+		if(flagNodo!=null) {
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getHijoIzq()==null) {
+				caminoMin=camino.clone();
+			}else {
+				if(caminoMin.esVacia() || camino.longitud()<caminoMin.longitud()) {
+					if(flagNodo.getHermanoDer()!=null) {
+						camino.eliminar(camino.longitud());
+						caminoMin=this.auxCaminoHojaMasCercana2(flagNodo.getHermanoDer(), camino, caminoMin);
+					}
+				}
+				if(caminoMin.esVacia() || camino.longitud()+1<caminoMin.longitud()) {
+					caminoMin=this.auxCaminoHojaMasCercana2(flagNodo.getHijoIzq(), camino, caminoMin);
+					camino.eliminar(camino.longitud());
+				}
+			}
+		}
+		return caminoMin;
+	}
+
 }

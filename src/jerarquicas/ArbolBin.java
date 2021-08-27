@@ -285,6 +285,7 @@ public class ArbolBin {
 	private boolean auxAncestros(NodoArbol flagNodo,Object elem, Lista lista, NodoArbol flagPadre) {
 		boolean encontrado=false;
 		if(flagNodo!=null) {
+			System.out.println(flagNodo.getElem());
 			if((flagNodo.getElem().equals(elem))) {
 				encontrado=true;
 			}else {

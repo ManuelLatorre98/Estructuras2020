@@ -1,8 +1,14 @@
 package Grafos;
 
+import lineales.dinamicas.Lista;
+
 public class TestGrafos {
 	public static void main(String[] args) {
 		GrafoEtiq grafo= new GrafoEtiq();
+		Lista lista= new Lista();
+		if(lista.esVacia() || lista.recuperar(1).equals(1)) {
+			System.out.println("EEEEEEEEEEEEEEEEEO");
+		}
 		for (int i = 1; i < 7; i++) {
 			grafo.insertarVertice(i);
 			
@@ -21,7 +27,7 @@ public class TestGrafos {
 		grafo.insertarArco(4, 6, 11);
 		grafo.insertarArco(6, 4, 12);
 		
-		System.out.println("Camino min con medio: "+grafo.caminoConIntermedio(1, 4, 5));
+		System.out.println("Camino Peso y long Max: "+grafo.primerCaminoMenorPesoYLong(1, 5,2, 2));
 		
 		
 		

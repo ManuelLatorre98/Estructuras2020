@@ -538,4 +538,34 @@ public class GrafoEtiq {
 		}
 		return caminoMin;
 	}
+	
+	public Lista primerCaminoMenorPesoYLong(Object origen, Object destino, int pesoMax, int longMax) {
+		NodoVert nodoOrigen=this.ubicarVertice(origen);
+		NodoVert nodoDest= this.ubicarVertice(destino);
+		Lista camino= new Lista();
+		Lista caminoMin= new Lista();
+		if(nodoOrigen!=null && nodoDest!=null) {
+			caminoMin=auxPrimerCaminoMenorPesoYLong(nodoOrigen, destino, pesoMax, longMax, camino, caminoMin,0);
+		}
+		return caminoMin;
+	}
+	
+	private Lista auxPrimerCaminoMenorPesoYLong(NodoVert flagNodo, Object dest, int pesoMax, int longMax,Lista camino, Lista caminoMin, int pesoAct) {
+		if(flagNodo!=null && camino.longitud()< longMax && pesoAct<pesoMax && caminoMin.esVacia()) {
+			camino.insertar(flagNodo.getElem(), camino.longitud()+1);
+			if(flagNodo.getElem().equals(dest)) {
+				caminoMin=camino.clone();
+			}else {
+				NodoAdy ady= flagNodo.getPrimerAdy();
+				while(ady != null) {
+					if(camino.localizar(ady.getVertice().getElem())==-1) {
+						caminoMin=auxPrimerCaminoMenorPesoYLong(ady.getVertice(),dest,pesoMax,longMax,camino,caminoMin, (pesoAct+ady.getEtiqueta()));
+					}
+					ady= ady.getSigAdyacente();
+				}
+			}
+			camino.eliminar(camino.longitud());	
+			}
+		return caminoMin;
+	}
 }

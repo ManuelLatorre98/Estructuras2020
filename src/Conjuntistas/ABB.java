@@ -618,6 +618,22 @@ public class ABB {
 		}
 		return nodoElem;
 	}
+	
+	public Lista listarPreorden() {
+		Lista lista= new Lista();
+		preOrden(this.raiz,lista);
+		return lista;
+	}
+	
+	private void preOrden(NodoArbol flagNodo, Lista lista) {
+		if(flagNodo!=null) {
+			lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
+			preOrden(flagNodo.getIzquierdo(),lista);
+			preOrden(flagNodo.getDerecho(),lista);
+		}
+
+	}
+	
 	public Lista listarInorden() {
 		Lista lista= new Lista();
 		inOrden(this.raiz,lista);
@@ -631,6 +647,40 @@ public class ABB {
 			inOrden(flagNodo.getDerecho(),lista);
 		}
 		
+	}
+	
+	public Lista listarPosorden() {
+		Lista lista= new Lista();
+		posOrden(this.raiz,lista);
+		return lista;
+	}
+	
+	private void posOrden(NodoArbol flagNodo,Lista lista) {
+		if(flagNodo!=null) {
+			posOrden(flagNodo.getIzquierdo(), lista);
+			posOrden(flagNodo.getDerecho(),lista);
+			lista.insertar(flagNodo.getElem(), (lista.longitud()+1));
+		}
+	}
+	
+	public Lista listarNiveles() {
+		Lista lista= new Lista();
+		Cola cola= new Cola();
+		NodoArbol nodo;
+		cola.poner(this.raiz);
+		while(!cola.esVacia()) {
+			nodo=(NodoArbol) cola.obtenerFrente();
+			cola.sacar();
+			lista.insertar(nodo.getElem(), 1);
+			if(nodo.getIzquierdo()!=null) {
+				cola.poner(nodo.getIzquierdo());
+			}
+			if(nodo.getDerecho()!=null) {
+				cola.poner(nodo.getDerecho());
+			}
+		}
+		lista=lista.invertir();
+		return lista;
 	}
 
 }
