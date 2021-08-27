@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Grafos.Grafo&apos; to &apos;GrafoNoEtiq&apos;&#x0D;&#x0A;- Original project: &apos;Estructuras2020&apos;&#x0D;&#x0A;- Original element: &apos;Grafos.Grafo&apos;&#x0D;&#x0A;- Renamed element: &apos;Grafos.GrafoNoEtiq&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Grafo&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;Grafos{Grafo.java[Grafo" matchStrategy="1" name="GrafoNoEtiq" qualified="false" references="true" similarDeclarations="false" stamp="1607431289185" textual="false" version="1.0"/>
+</session>

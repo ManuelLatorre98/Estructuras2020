@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 3 elements to &apos;varios/src/varios&apos;&#x0D;&#x0A;- Original project: &apos;varios&apos;&#x0D;&#x0A;- Destination element: &apos;varios/src/varios&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     Letra.java&#x0D;&#x0A;     ej3.java&#x0D;&#x0A;     Turno.java&#x0D;&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;varios" element1="/src&lt;{Letra.java" element2="/src&lt;{ej3.java" element3="/src&lt;{Turno.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1600106171363" units="3" version="1.0"/>
+</session>
