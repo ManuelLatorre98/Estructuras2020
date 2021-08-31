@@ -1,0 +1,4 @@
+Utilizando un archivo de entrada que contenga un texto con varias palabras y varias lineas
+de texto y uno o mas espacios en blanco entre    ellas, generar sinEspacios.txt con el miso (si, asi aparecia en el pdf)
+texto pero eliminando todos los espacios en blanco.
+Agrego esta cuarta linea para el punto 2 

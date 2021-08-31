@@ -1,0 +1,5 @@
+﻿Este archivo de entrada tiene varias lineas.
+Podria tener datos de distintos tipos, pero por ahora solo nos interesa que copien
+ este archivo con cada linea como viene, en "salida.txt"
+
+¡No se olviden de esta ultima lineas!

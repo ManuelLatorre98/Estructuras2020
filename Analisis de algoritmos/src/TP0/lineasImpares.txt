@@ -1,0 +1,2 @@
+de texto y uno o mas espacios en blanco entre    ellas, generar sinEspacios.txt con el miso (si, asi aparecia en el pdf)
+Agrego esta cuarta linea para el punto 2 

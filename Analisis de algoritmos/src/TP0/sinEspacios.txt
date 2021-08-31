@@ -1,0 +1,3 @@
+Utilizandounarchivodeentradaquecontengauntextoconvariaspalabrasyvariaslineas
+detextoyunoomasespaciosenblancoentreellas,generarsinEspacios.txtconelmiso(si,asiapareceenelpdf)
+textoperoeliminandotodoslosespaciosenblanco.
